@@ -53,4 +53,12 @@ class ProducerRepositoryTest {
 
         assertThat(producer, notNullValue());
     }
+
+    @Test
+    void shouldReturnProducerWithMoreThanOneAward() {
+        List<Producer> producers = repository.findProducersWithMoreThanOneAward();
+
+        assertThat(producers.get(0).getId(), equalTo(26));
+        assertThat(producers.get(1).getId(), equalTo(119));
+    }
 }

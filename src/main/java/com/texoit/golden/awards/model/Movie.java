@@ -16,17 +16,17 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String year;
+    private Integer year;
     private String title;
 
     @ManyToMany
-    @JoinTable(name = "studio_movie",
+    @JoinTable(name = "movie_studio",
                joinColumns = { @JoinColumn(name = "movie_id")},
                inverseJoinColumns = { @JoinColumn(name = "studio_id") })
     private List<Studio> studios;
 
     @ManyToMany
-    @JoinTable(name = "studio_producer",
+    @JoinTable(name = "movie_producer",
                joinColumns = { @JoinColumn(name = "movie_id") },
                inverseJoinColumns = { @JoinColumn(name = "producer_id") })
     private List<Producer> producers;

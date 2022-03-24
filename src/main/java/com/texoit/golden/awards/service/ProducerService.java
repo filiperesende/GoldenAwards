@@ -41,4 +41,8 @@ public class ProducerService {
         producer.setName(name);
         return repository.save(producer);
     }
+
+    public List<Producer> findProducersWithMoreThanOneAward() {
+        return repository.findProducersWithMoreThanOneAward();
+    }
 }

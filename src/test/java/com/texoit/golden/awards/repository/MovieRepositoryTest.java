@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -17,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.texoit.golden.awards.model.Movie;
+import com.texoit.golden.awards.model.Producer;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -25,6 +27,9 @@ class MovieRepositoryTest {
 
     @Autowired
     private MovieRepository repository;
+
+    @Autowired
+    private ProducerRepository producerRepository;
 
     @Test
     void shouldReturnAllMovies() {
@@ -46,4 +51,17 @@ class MovieRepositoryTest {
 
         assertThat(page.getContent().get(0).getTitle(), equalTo("Rambo: Last Blood"));
     }
+
+    @Test
+    void shouldReturnWinnerMoviesByProducer() {
+        Optional<Producer> op = producerRepository.findById(26);
+
+        List<Movie> movies = repository.findAllByWinnerTrueAndProducersOrderByYearAsc(op.get());
+
+        assertThat(movies.get(0).getTitle(), equalTo("Bolero"));
+        assertThat(movies.get(0).getYear(), equalTo(1984));
+        assertThat(movies.get(1).getTitle(), equalTo("Ghosts Can't Do It"));
+        assertThat(movies.get(1).getYear(), equalTo(1990));
+    }
+
 }
