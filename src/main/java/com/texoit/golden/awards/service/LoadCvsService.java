@@ -16,13 +16,12 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import com.texoit.golden.awards.model.Movie;
+import com.texoit.golden.awards.model.Producer;
 import com.texoit.golden.awards.model.Studio;
 import com.texoit.golden.awards.repository.MovieRepository;
 
 @Service
 public class LoadCvsService {
-
-    // private List<MovieCvs> movies;
 
     @Autowired
     private MovieRepository repository;
@@ -30,9 +29,11 @@ public class LoadCvsService {
     @Autowired
     private StudioService studioService;
 
+    @Autowired
+    private ProducerService producerService;
+
     @PostConstruct
     public void postConstruct() {
-        // movies = new ArrayList<>();
         URL resource = getClass().getResource("/movielist.csv");
         CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build();
         try (CSVReader reader = new CSVReaderBuilder(new FileReader(resource.getFile())).withCSVParser(csvParser).withSkipLines(1).build()) {
@@ -48,9 +49,14 @@ public class LoadCvsService {
         movie.setYear(line[0]);
         movie.setTitle(line[1]);
         setStudios(line[2], movie);
-        movie.setProducers(line[3]);
+        setProducers(line[3], movie);
         movie.setWinner("yes".equalsIgnoreCase(line[4]));
         repository.save(movie);
+    }
+
+    private void setProducers(String names, Movie movie) {
+        List<Producer> producers = producerService.findByNames(names);
+        movie.setProducers(producers);
     }
 
     private void setStudios(String names, Movie movie) {

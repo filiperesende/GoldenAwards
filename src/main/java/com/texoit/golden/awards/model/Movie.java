@@ -22,9 +22,14 @@ public class Movie {
     @ManyToMany
     @JoinTable(name = "studio_movie",
                joinColumns = { @JoinColumn(name = "movie_id")},
-               inverseJoinColumns = { @JoinColumn(name = "studio_id")})
+               inverseJoinColumns = { @JoinColumn(name = "studio_id") })
     private List<Studio> studios;
 
-    private String producers;
+    @ManyToMany
+    @JoinTable(name = "studio_producer",
+               joinColumns = { @JoinColumn(name = "movie_id") },
+               inverseJoinColumns = { @JoinColumn(name = "producer_id") })
+    private List<Producer> producers;
+
     private boolean winner;
 }
