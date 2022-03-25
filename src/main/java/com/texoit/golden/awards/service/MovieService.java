@@ -18,4 +18,17 @@ public class MovieService {
     public List<Movie> findWinnerMoviesByProducer(Producer producer) {
         return repository.findAllByWinnerTrueAndProducersOrderByYearAsc(producer);
     }
+
+    public void updateMovieProducer(Integer producertSetId, Integer movieId, Integer producerWhereId) {
+        repository.updateMovieProducer(producertSetId, movieId, producerWhereId);
+    }
+
+    public void resetDatabase() {
+        repository.updateMovieProducer(1, 1, 26);
+        repository.updateMovieProducer(11, 11, 26);
+        repository.updateMovieProducer(60, 66, 52);
+        repository.updateMovieProducer(288, 202, 16);
+        repository.updateMovieProducer(34, 36, 29);
+        repository.updateMovieProducer(178, 156, 61);
+    }
 }

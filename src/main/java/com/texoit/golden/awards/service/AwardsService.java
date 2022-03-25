@@ -1,5 +1,6 @@
 package com.texoit.golden.awards.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -40,33 +41,44 @@ public class AwardsService {
     }
 
     private void addMin(AwardsDTO awards, ProducerAwardDTO dto) {
-        if (isMinOrEqual(awards, dto))
+        if (awards.getMin().isEmpty() || isSameInterval(awards.getMin(), dto)) {
             awards.getMin().add(dto);
+        } else if (isLess(awards, dto)) {
+            awards.setMin(new ArrayList<>());
+            awards.getMin().add(dto);
+        }
     }
 
     private void addMax(AwardsDTO awards, ProducerAwardDTO dto) {
-        if (isMaxOrEqual(awards, dto))
+        if (awards.getMax().isEmpty() || isSameInterval(awards.getMax(), dto)) {
             awards.getMax().add(dto);
+        } else if (isGreater(awards, dto)) {
+            awards.setMax(new ArrayList<>());
+            awards.getMax().add(dto);
+        }
     }
 
-    private boolean isMinOrEqual(AwardsDTO awards, ProducerAwardDTO dto) {
-        if (awards.getMin().isEmpty())
-            return true;
-
+    private boolean isLess(AwardsDTO awards, ProducerAwardDTO dto) {
         for (ProducerAwardDTO item : awards.getMin()) {
-            if (dto.getInterval() <= item.getInterval() && !dto.getProducer().equals(item.getProducer()))
+            if (dto.getInterval() < item.getInterval())
                 return true;
         }
 
         return false;
     }
 
-    private boolean isMaxOrEqual(AwardsDTO awards, ProducerAwardDTO dto) {
-        if (awards.getMin().isEmpty())
-            return true;
+    private boolean isGreater(AwardsDTO awards, ProducerAwardDTO dto) {
+        for (ProducerAwardDTO item : awards.getMax()) {
+            if (dto.getInterval() > item.getInterval())
+                return true;
+        }
 
-        for (ProducerAwardDTO item : awards.getMin()) {
-            if (dto.getInterval() >= item.getInterval() && !dto.getProducer().equals(item.getProducer()))
+        return false;
+    }
+
+    private boolean isSameInterval(List<ProducerAwardDTO> producers, ProducerAwardDTO dto) {
+        for (ProducerAwardDTO item : producers) {
+            if (dto.getInterval().equals(item.getInterval()))
                 return true;
         }
 

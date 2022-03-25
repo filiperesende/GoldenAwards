@@ -1,5 +1,6 @@
 package com.texoit.golden.awards.service;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -7,6 +8,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,9 +36,9 @@ public class LoadCvsService {
 
     @PostConstruct
     public void postConstruct() {
-        URL resource = getClass().getResource("/movielist.csv");
+        File file = getFile();
         CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build();
-        try (CSVReader reader = new CSVReaderBuilder(new FileReader(resource.getFile())).withCSVParser(csvParser).withSkipLines(1).build()) {
+        try (CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withCSVParser(csvParser).withSkipLines(1).build()) {
             List<String[]> r = reader.readAll();
             r.forEach(this::createMovie);
         } catch (IOException | CsvException e) {
@@ -44,9 +46,23 @@ public class LoadCvsService {
         }
     }
 
+    private File getFile() {
+        URL resource = LoadCvsService.class.getResource("/movielist.csv");
+        String tmp = System.getProperty("java.io.tmpdir");
+        File file = new File(tmp + "/source.cvs");
+        try {
+            FileUtils.deleteQuietly(file);
+            org.apache.commons.io.FileUtils.copyFile(new File(resource.getFile()), file);
+            return file;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new File(tmp);
+        }
+    }
+
     private void createMovie(String[] line) {
         Movie movie = new Movie();
-        movie.setYear(line[0]);
+        movie.setYear(Integer.parseInt(line[0]));
         movie.setTitle(line[1]);
         setStudios(line[2], movie);
         setProducers(line[3], movie);
