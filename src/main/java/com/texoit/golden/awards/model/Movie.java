@@ -1,5 +1,6 @@
 package com.texoit.golden.awards.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
@@ -10,7 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Movie {
+public class Movie implements Serializable {
+
+    private static final long serialVersionUID = 1969374743484311525L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

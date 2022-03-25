@@ -12,7 +12,10 @@ import com.texoit.golden.awards.model.Movie;
 import com.texoit.golden.awards.model.Producer;
 
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
+
     List<Movie> findAllByWinnerTrueAndProducersOrderByYearAsc(Producer producer);
+    List<Movie> findAllByWinnerTrueOrderByYearAsc();
+    List<Movie> findAllByOrderByYearAsc();
 
     @Modifying
     @Transactional

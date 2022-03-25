@@ -45,4 +45,15 @@ public class ProducerService {
     public List<Producer> findProducersWithMoreThanOneAward() {
         return repository.findProducersWithMoreThanOneAward();
     }
+
+    public List<Producer> get() {
+        return repository.findAllByOrderByNameAsc();
+    }
+
+    public Producer getById(Integer id) {
+        if (id == null)
+            return null;
+
+        return repository.getOne(id);
+    }
 }

@@ -31,4 +31,20 @@ public class MovieService {
         repository.updateMovieProducer(34, 36, 29);
         repository.updateMovieProducer(178, 156, 61);
     }
+
+    public List<Movie> get() {
+        return repository.findAllByOrderByYearAsc();
+    }
+
+    public List<Movie> getWinners() {
+        return repository.findAllByWinnerTrueOrderByYearAsc();
+    }
+
+    public Movie getById(Integer id) {
+        if (id == null)
+            return null;
+
+        return repository.getOne(id);
+    }
+
 }
