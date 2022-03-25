@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.texoit.golden.awards.model.Movie;
 import com.texoit.golden.awards.model.Producer;
+import com.texoit.golden.awards.service.MovieService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -27,6 +29,14 @@ class MovieRepositoryTest {
 
     @Autowired
     private ProducerRepository producerRepository;
+
+    @Autowired
+    private MovieService movieService;
+
+    @BeforeEach
+    void before() {
+        movieService.resetDatabase();
+    }
 
     @Test
     void shouldReturnAllMovies() {

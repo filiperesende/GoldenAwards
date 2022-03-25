@@ -86,26 +86,50 @@ public class AwardsService {
     }
 
     private ProducerAwardDTO createDto(Producer producer, List<Movie> movies, boolean isMin) {
-        Movie first = getFirst(movies);
-        Movie last = getLast(movies, isMin);
+        Integer[] years = isMin ? getMinDiffYears(movies) : getMaxDiffYears(movies);
 
         ProducerAwardDTO dto = new ProducerAwardDTO();
         dto.setProducer(producer.getName());
-        dto.setPreviousWin(first.getYear());
-        dto.setFollowingWin(last.getYear());
-        dto.setInterval(last.getYear() - first.getYear());
+        dto.setPreviousWin(years[0]);
+        dto.setFollowingWin(years[1]);
+        dto.setInterval(years[1] - years[0]);
         return dto;
     }
 
-    private Movie getFirst(List<Movie> movies) {
-        return movies.get(0);
+    private Integer[] getMinDiffYears(List<Movie> movies) {
+        int diff = Integer.MAX_VALUE;
+        Integer first = null;
+        Integer last = null;
+        for (int i = 0; i <= movies.size() - 2; i++) {
+            Movie itemFirst = movies.get(i);
+            Movie itemLast = movies.get(i + 1);
+            int itemDiff = itemLast.getYear() - itemFirst.getYear();
+            if (itemDiff < diff) {
+                diff = itemDiff;
+                first = itemFirst.getYear();
+                last = itemLast.getYear();
+            }
+        }
+
+        return new Integer[] { first, last };
     }
 
-    private Movie getLast(List<Movie> movies, boolean isMin) {
-        if (isMin)
-            return movies.get(1);
+    private Integer[] getMaxDiffYears(List<Movie> movies) {
+        int diff = -1;
+        Integer first = null;
+        Integer last = null;
+        for (int i = 0; i <= movies.size() - 2; i++) {
+            Movie itemFirst = movies.get(i);
+            Movie itemLast = movies.get(i + 1);
+            int itemDiff = itemLast.getYear() - itemFirst.getYear();
+            if (itemDiff > diff) {
+                diff = itemDiff;
+                first = itemFirst.getYear();
+                last = itemLast.getYear();
+            }
+        }
 
-        return movies.get(movies.size() - 1);
+        return new Integer[] { first, last };
     }
 
 }
