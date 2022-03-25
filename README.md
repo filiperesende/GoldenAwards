@@ -3,6 +3,7 @@ Os gets e sets são definidos via anotação lombok.
 
 Seguem os passos para executar o projeto, considerando que maven e java estão configurados no path e o console está no diretório do projeto.  
 1 - mvn clean install (adicionar -DskipTests caso queira ignorar os testes)  
+	1.1 - mvn clean test (para rodar somente os testes)  
 2 - java -jar target/GoldenAwards-0.0.1-SNAPSHOT.jar  
 
 Para acessar os endpoints, basta executar no navegador ou postman as seguintes URLs:  
