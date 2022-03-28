@@ -25,11 +25,11 @@ public class MovieService {
 
     public void resetDatabase() {
         repository.updateMovieProducer(1, 1, 26);
+        repository.updateMovieProducer(1, 1, 28);
         repository.updateMovieProducer(11, 11, 26);
-        repository.updateMovieProducer(60, 66, 52);
-        repository.updateMovieProducer(288, 202, 16);
-        repository.updateMovieProducer(34, 36, 29);
-        repository.updateMovieProducer(178, 156, 61);
+        repository.updateMovieProducer(11, 11, 28);
+        repository.updateMovieProducer(95, 156, 72);
+        repository.updateMovieProducer(349, 11, 16);
     }
 
     public List<Movie> get() {

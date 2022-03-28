@@ -24,13 +24,19 @@ public class ProducerService {
         String[] split = names.split(",");
         List<Producer> producers = new ArrayList<>();
         for (String item : split) {
-            String name = StringUtils.trim(item);
-            Producer producer = repository.findByName(name);
-            if (producer == null) {
-                producer = create(name);
-            }
+            String[] split2 = item.split(" and ");
+            for (String item2 : split2) {
+                String name = StringUtils.trim(item2);
+                if (StringUtils.isBlank(name))
+                    continue;
 
-            producers.add(producer);
+                Producer producer = repository.findByName(name);
+                if (producer == null) {
+                    producer = create(name);
+                }
+
+                producers.add(producer);
+            }
         }
 
         return producers;

@@ -61,7 +61,7 @@ class MovieRepositoryTest {
 
     @Test
     void shouldReturnWinnerMoviesByProducer() {
-        Optional<Producer> op = producerRepository.findById(26);
+        Optional<Producer> op = producerRepository.findById(28);
 
         List<Movie> movies = repository.findAllByWinnerTrueAndProducersOrderByYearAsc(op.get());
 

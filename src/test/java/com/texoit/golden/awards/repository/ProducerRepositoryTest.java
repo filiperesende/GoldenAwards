@@ -37,7 +37,7 @@ class ProducerRepositoryTest {
     void shouldReturnAllProducers() {
         List<Producer> all = repository.findAll();
 
-        assertThat(all.size(), equalTo(300));
+        assertThat(all.size(), equalTo(359));
     }
 
     @Test
@@ -51,7 +51,7 @@ class ProducerRepositoryTest {
     void shouldReturnLastProducer() {
         Page<Producer> page = repository.findAll(PageRequest.of(299, 1));
 
-        assertThat(page.getContent().get(0).getName(), equalTo("and Les Weldon"));
+        assertThat(page.getContent().get(0).getName(), equalTo("Gregory Goodman"));
     }
 
     @Test
@@ -65,7 +65,11 @@ class ProducerRepositoryTest {
     void shouldReturnProducerWithMoreThanOneAward() {
         List<Producer> producers = repository.findProducersWithMoreThanOneAward();
 
-        assertThat(producers.get(0).getId(), equalTo(26));
-        assertThat(producers.get(1).getId(), equalTo(119));
+        assertThat(producers.size(), equalTo(5));
+        assertThat(producers.get(0).getId(), equalTo(16));
+        assertThat(producers.get(1).getId(), equalTo(28));
+        assertThat(producers.get(2).getId(), equalTo(32));
+        assertThat(producers.get(3).getId(), equalTo(58));
+        assertThat(producers.get(4).getId(), equalTo(152));
     }
 }

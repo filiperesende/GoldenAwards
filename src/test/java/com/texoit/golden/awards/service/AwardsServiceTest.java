@@ -29,61 +29,16 @@ class AwardsServiceTest {
     }
 
     @Test
-    void shouldRetornAwardDTOWithOneMinIntervalSixAndOneMaxIntervalThirteen() {
-        AwardsDTO dto = service.get();
-
-        assertThat(dto, notNullValue());
-        assertThat(dto.getMin(), notNullValue());
-        assertThat(dto.getMin().size(), equalTo(1));
-        assertThat(dto.getMin().get(0).getPreviousWin(), equalTo(1984));
-        assertThat(dto.getMin().get(0).getFollowingWin(), equalTo(1990));
-        assertThat(dto.getMin().get(0).getInterval(), equalTo(6));
-        assertThat(dto.getMin().get(0).getProducer(), equalTo("Bo Derek"));
-
-        assertThat(dto.getMax(), notNullValue());
-        assertThat(dto.getMax().size(), equalTo(1));
-        assertThat(dto.getMax().get(0).getPreviousWin(), equalTo(2002));
-        assertThat(dto.getMax().get(0).getFollowingWin(), equalTo(2015));
-        assertThat(dto.getMax().get(0).getInterval(), equalTo(13));
-        assertThat(dto.getMax().get(0).getProducer(), equalTo("Matthew Vaughn"));
-    }
-
-    @Test
     void shouldRetornAwardDTOWithOneMinIntervalOneAndOneMaxIntervalThirteen() {
-        movieService.updateMovieProducer(26, 1, 1);
-        movieService.updateMovieProducer(26, 11, 11);
-
-        AwardsDTO dto = service.get();
-
-        assertThat(dto, notNullValue());
-        assertThat(dto.getMin(), notNullValue());
-        assertThat(dto.getMin().size(), equalTo(1));
-        assertThat(dto.getMin().get(0).getPreviousWin(), equalTo(1980));
-        assertThat(dto.getMin().get(0).getFollowingWin(), equalTo(1981));
-        assertThat(dto.getMin().get(0).getInterval(), equalTo(1));
-        assertThat(dto.getMin().get(0).getProducer(), equalTo("Bo Derek"));
-
-        assertThat(dto.getMax(), notNullValue());
-        assertThat(dto.getMax().size(), equalTo(1));
-        assertThat(dto.getMax().get(0).getPreviousWin(), equalTo(2002));
-        assertThat(dto.getMax().get(0).getFollowingWin(), equalTo(2015));
-        assertThat(dto.getMax().get(0).getInterval(), equalTo(13));
-        assertThat(dto.getMax().get(0).getProducer(), equalTo("Matthew Vaughn"));
-    }
-
-    @Test
-    void shouldRetornAwardDTOWithOneMinIntervalTwoAndOneMaxIntervalThirteen() {
-        movieService.updateMovieProducer(52, 66, 60);
-
         AwardsDTO dto = service.get();
 
         assertThat(dto, notNullValue());
         assertThat(dto.getMin(), notNullValue());
         assertThat(dto.getMin().size(), equalTo(1));
         assertThat(dto.getMin().get(0).getPreviousWin(), equalTo(1990));
-        assertThat(dto.getMin().get(0).getFollowingWin(), equalTo(1992));
-        assertThat(dto.getMin().get(0).getInterval(), equalTo(2));
-        assertThat(dto.getMin().get(0).getProducer(), equalTo("Steven Perry and Joel Silver"));
+        assertThat(dto.getMin().get(0).getFollowingWin(), equalTo(1991));
+        assertThat(dto.getMin().get(0).getInterval(), equalTo(1));
+        assertThat(dto.getMin().get(0).getProducer(), equalTo("Joel Silver"));
 
         assertThat(dto.getMax(), notNullValue());
         assertThat(dto.getMax().size(), equalTo(1));
@@ -97,9 +52,7 @@ class AwardsServiceTest {
     void shouldRetornAwardDTOWithTwoMinOneMaxIntervalThirtySeven() {
         movieService.updateMovieProducer(26, 1, 1);
         movieService.updateMovieProducer(26, 11, 11);
-        movieService.updateMovieProducer(29, 36, 34);
-        movieService.updateMovieProducer(52, 66, 60);
-        movieService.updateMovieProducer(16, 202, 288);
+        movieService.updateMovieProducer(16, 202, 349);
 
         AwardsDTO dto = service.get();
 
@@ -109,12 +62,12 @@ class AwardsServiceTest {
         assertThat(dto.getMin().get(0).getPreviousWin(), equalTo(1980));
         assertThat(dto.getMin().get(0).getFollowingWin(), equalTo(1981));
         assertThat(dto.getMin().get(0).getInterval(), equalTo(1));
-        assertThat(dto.getMin().get(0).getProducer(), equalTo("Bo Derek"));
+        assertThat(dto.getMin().get(0).getProducer(), equalTo("Roger M. Rothstein"));
 
-        assertThat(dto.getMin().get(1).getPreviousWin(), equalTo(1985));
-        assertThat(dto.getMin().get(1).getFollowingWin(), equalTo(1986));
+        assertThat(dto.getMin().get(1).getPreviousWin(), equalTo(1990));
+        assertThat(dto.getMin().get(1).getFollowingWin(), equalTo(1991));
         assertThat(dto.getMin().get(1).getInterval(), equalTo(1));
-        assertThat(dto.getMin().get(1).getProducer(), equalTo("Buzz Feitshans"));
+        assertThat(dto.getMin().get(1).getProducer(), equalTo("Joel Silver"));
 
         assertThat(dto.getMax(), notNullValue());
         assertThat(dto.getMax().size(), equalTo(1));
@@ -126,11 +79,9 @@ class AwardsServiceTest {
 
     @Test
     void shouldRetornAwardDTOWithTwoMinAndTwoMax() {
-        movieService.updateMovieProducer(26, 1, 1);
-        movieService.updateMovieProducer(26, 11, 11);
-        movieService.updateMovieProducer(29, 36, 34);
-        movieService.updateMovieProducer(52, 66, 60);
-        movieService.updateMovieProducer(61, 156, 178);
+        movieService.updateMovieProducer(28, 1, 1);
+        movieService.updateMovieProducer(28, 11, 11);
+        movieService.updateMovieProducer(72, 156, 95);
 
         AwardsDTO dto = service.get();
 
@@ -142,10 +93,10 @@ class AwardsServiceTest {
         assertThat(dto.getMin().get(0).getInterval(), equalTo(1));
         assertThat(dto.getMin().get(0).getProducer(), equalTo("Bo Derek"));
 
-        assertThat(dto.getMin().get(1).getPreviousWin(), equalTo(1985));
-        assertThat(dto.getMin().get(1).getFollowingWin(), equalTo(1986));
+        assertThat(dto.getMin().get(1).getPreviousWin(), equalTo(1990));
+        assertThat(dto.getMin().get(1).getFollowingWin(), equalTo(1991));
         assertThat(dto.getMin().get(1).getInterval(), equalTo(1));
-        assertThat(dto.getMin().get(1).getProducer(), equalTo("Buzz Feitshans"));
+        assertThat(dto.getMin().get(1).getProducer(), equalTo("Joel Silver"));
 
         assertThat(dto.getMax(), notNullValue());
         assertThat(dto.getMax().size(), equalTo(2));
